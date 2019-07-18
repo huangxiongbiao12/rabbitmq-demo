@@ -1,0 +1,17 @@
+spring:
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: guest
+    password: guest
+    listener:
+      simple:
+        retry:                    #抛异常会按retry策略重发（建议不在程序内抛异常，记录失败消息，然后确认）
+          enabled: true           #允许重发
+          max-attempts: 5         #重发次数
+          initial-interval: 30000 #重发间隔时间
+        acknowledge-mode: manual  #不确认宕机重启时会重新消费，确认失败会一直重发
+    publisher-confirms: true      # 如果消息没有到exchange,则confirm回调,ack=false，
+                                  # 如果消息到达exchange,则confirm回调,ack=true
+    publisher-returns: true       #exchange到queue成功,则不回调return
+                                  #exchange到queue失败,则回调return(需设置mandatory=true,否则不回回调,消息就丢了)

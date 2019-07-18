@@ -1,0 +1,10 @@
+spring:
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: guest
+    password: guest
+    publisher-confirms: true      # 如果消息没有到exchange,则confirm回调,ack=false，
+                                      # 如果消息到达exchange,则confirm回调,ack=true
+    publisher-returns: true       #exchange到queue成功,则不回调return
+                                      #exchange到queue失败,则回调return(需设置mandatory=true,否则不回回调,消息就丢了)
